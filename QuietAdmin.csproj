@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    IDE support only. build.ps1 is the real build: it drives csc directly with the same reference list, which
+    avoids needing a net35 targeting pack installed.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net35</TargetFramework>
+    <AssemblyName>QuietAdmin</AssemblyName>
+    <RootNamespace>QuietAdmin</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Holdfast Nations At War</GameDir>
+    <ManagedDir>$(GameDir)\Holdfast NaW_Data\Managed</ManagedDir>
+    <MelonDir>$(GameDir)\MelonLoader\net35</MelonDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="QuietAdmin.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="mscorlib">              <HintPath>$(ManagedDir)\mscorlib.dll</HintPath>              </Reference>
+    <Reference Include="System">                <HintPath>$(ManagedDir)\System.dll</HintPath>                </Reference>
+    <Reference Include="System.Core">           <HintPath>$(ManagedDir)\System.Core.dll</HintPath>           </Reference>
+    <Reference Include="netstandard">           <HintPath>$(ManagedDir)\netstandard.dll</HintPath>           </Reference>
+    <Reference Include="UnityEngine">           <HintPath>$(ManagedDir)\UnityEngine.dll</HintPath>           </Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath> </Reference>
+    <Reference Include="Assembly-CSharp">       <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>       </Reference>
+    <Reference Include="MelonLoader">           <HintPath>$(MelonDir)\MelonLoader.dll</HintPath>            </Reference>
+    <Reference Include="0Harmony">              <HintPath>$(MelonDir)\0Harmony.dll</HintPath>               </Reference>
+  </ItemGroup>
+
+</Project>
