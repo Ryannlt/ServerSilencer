@@ -77,17 +77,6 @@ log.
 **The game crashes on launch after adding the mod.** Remove the `.dll`, launch to confirm the game is fine, then
 open an issue with `MelonLoader\Latest.log` attached.
 
-## How it works
-
-One Harmony prefix on `ClientChatHandler.AddChatEntry(int, string, TextChatEntryType, TextChatChannel, string)`,
-which every chat route funnels through. A line is dropped when its entry type is `AdminAction`. The game produces
-that type in exactly one place, when a message arrives on the `Admin` channel with `playerID == -1`, meaning no
-sender and therefore the server itself.
-
-Private message types are exempted before that test, unconditionally.
-
-A second prefix on `AdminFancyUINotificationPanel.ShowAdminNotification` covers the popups, off by default.
-
 ## Building
 
 Only needed if you want to change something. Otherwise use the prebuilt release above.
