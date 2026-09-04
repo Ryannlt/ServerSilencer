@@ -1,0 +1,9 @@
+{
+  "name": "QuietAdmin",
+  "version_number": "2.0.0",
+  "website_url": "https://github.com/Ryannlt/QuietAdmin",
+  "description": "Hides the chat lines the server posts on the admin channel, so a server mod generating hundreds of slays and revives cannot bury your chat pane. Private messages and broadcasts are untouched. Client side.",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305"
+  ]
+}

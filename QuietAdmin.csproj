@@ -2,11 +2,11 @@
 
   <!--
     IDE support only. build.ps1 is the real build: it drives csc directly with the same reference list, which
-    avoids needing a net35 targeting pack installed.
+    avoids needing a targeting pack installed.
   -->
 
   <PropertyGroup>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <AssemblyName>QuietAdmin</AssemblyName>
     <RootNamespace>QuietAdmin</RootNamespace>
     <LangVersion>latest</LangVersion>
@@ -20,7 +20,8 @@
   <PropertyGroup>
     <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Holdfast Nations At War</GameDir>
     <ManagedDir>$(GameDir)\Holdfast NaW_Data\Managed</ManagedDir>
-    <MelonDir>$(GameDir)\MelonLoader\net35</MelonDir>
+    <ProfileName Condition="'$(ProfileName)' == ''">Default</ProfileName>
+    <BepInExDir>$(APPDATA)\r2modmanPlus-local\HoldfastNationsAtWar\profiles\$(ProfileName)\BepInEx\core</BepInExDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,8 +36,9 @@
     <Reference Include="UnityEngine">           <HintPath>$(ManagedDir)\UnityEngine.dll</HintPath>           </Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath> </Reference>
     <Reference Include="Assembly-CSharp">       <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>       </Reference>
-    <Reference Include="MelonLoader">           <HintPath>$(MelonDir)\MelonLoader.dll</HintPath>            </Reference>
-    <Reference Include="0Harmony">              <HintPath>$(MelonDir)\0Harmony.dll</HintPath>               </Reference>
+    <Reference Include="HoldfastEnums.Runtime"><HintPath>$(ManagedDir)\HoldfastEnums.Runtime.dll</HintPath></Reference>
+    <Reference Include="BepInEx">               <HintPath>$(BepInExDir)\BepInEx.dll</HintPath>              </Reference>
+    <Reference Include="0Harmony">              <HintPath>$(BepInExDir)\0Harmony.dll</HintPath>             </Reference>
   </ItemGroup>
 
 </Project>

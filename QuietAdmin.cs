@@ -1,37 +1,71 @@
+using System;
+using System.IO;
 using System.Reflection;
+using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 using HoldfastGame;
-using MelonLoader;
+using UnityEngine;
 
-[assembly: MelonInfo(typeof(QuietAdmin.QuietAdminMod), "QuietAdmin", "1.0.0", "Ryannlt")]
-[assembly: MelonGame("Anvil Game Studio", "Holdfast NaW")]
-
-// Kept in step with MelonInfo above; release.ps1 reads this back off the built DLL.
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+// Kept in step with BepInPlugin below; package.ps1 reads this back off the built DLL.
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 
 namespace QuietAdmin
 {
     // Hides the chat lines the server posts on the admin channel - slays, revives, teleports, weapon grants -
     // which a server mod can generate hundreds of in one session.
-    public class QuietAdminMod : MelonMod
+    [BepInPlugin(Guid, "QuietAdmin", "2.0.0")]
+    public class QuietAdminMod : BaseUnityPlugin
     {
-        internal static MelonPreferences_Entry<bool> BlockAdminChat;
-        internal static MelonPreferences_Entry<bool> BlockNotifications;
+        // Also names the config file, BepInEx/config/com.ryannlt.quietadmin.cfg.
+        public const string Guid = "com.ryannlt.quietadmin";
 
-        public override void OnInitializeMelon()
+        internal static ConfigEntry<bool> BlockAdminChat;
+        internal static ConfigEntry<bool> BlockNotifications;
+
+        private DateTime _stamp;
+        private float _nextCheck;
+
+        private void Awake()
         {
-            MelonPreferences_Category category = MelonPreferences.CreateCategory("QuietAdmin", "QuietAdmin");
+            BlockAdminChat = Config.Bind("General", "BlockAdminChat", true,
+                "Hide chat lines the server posts on the admin channel. Private messages are never affected.");
+            BlockNotifications = Config.Bind("General", "BlockNotifications", false,
+                "Also hide the centre-screen admin notification popups.");
 
-            BlockAdminChat = category.CreateEntry(
-                "BlockAdminChat", true,
-                description: "Hide chat lines the server posts on the admin channel. Private messages are never affected.");
+            _stamp = Stamp();
 
-            BlockNotifications = category.CreateEntry(
-                "BlockNotifications", false,
-                description: "Also hide the centre-screen admin notification popups.");
+            // BepInEx applies no Harmony patches itself, and without this the mod loads cleanly and does nothing.
+            Harmony.CreateAndPatchAll(typeof(QuietAdminMod).Assembly, Guid);
 
-            LoggerInstance.Msg($"Ready. BlockAdminChat={BlockAdminChat.Value} BlockNotifications={BlockNotifications.Value}");
+            Logger.LogInfo($"Ready. BlockAdminChat={BlockAdminChat.Value} BlockNotifications={BlockNotifications.Value}");
+        }
+
+        // BepInEx never watches its own cfg, so an external edit only lands if the mod goes looking for it.
+        private void Update()
+        {
+            if (Time.unscaledTime < _nextCheck) return;
+            _nextCheck = Time.unscaledTime + 1f;
+
+            DateTime stamp = Stamp();
+            if (stamp == _stamp) return;
+
+            _stamp = stamp;
+            Config.Reload();
+        }
+
+        private DateTime Stamp()
+        {
+            try
+            {
+                return File.GetLastWriteTimeUtc(Config.ConfigFilePath);
+            }
+            catch (Exception)
+            {
+                // A locked or half-written file just means no reload this second.
+                return _stamp;
+            }
         }
     }
 

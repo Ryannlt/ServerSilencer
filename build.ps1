@@ -1,12 +1,15 @@
-# Builds QuietAdmin.dll and drops it in the game's Mods folder.
+# Builds QuietAdmin.dll and drops it in an r2modman profile.
 #
 #   powershell -ExecutionPolicy Bypass -File .\build.ps1
 #
-# Drives csc directly rather than 'dotnet build' so no net35 targeting pack is needed - the references below
-# are the game's own assemblies, which is what the mod runs against anyway.
+# Drives csc directly rather than 'dotnet build' so no targeting pack is needed - the references below are the
+# game's own assemblies plus BepInEx, which is what the mod runs against anyway.
 
 param(
-    # Skip copying into the game's Mods folder. release.ps1 uses this so a running game cannot block a build.
+    # Which r2modman profile to deploy into.
+    [string]$ProfileName = 'Default',
+
+    # Skip the deploy. package.ps1 uses this so a running game cannot block a build.
     [switch]$NoDeploy
 )
 
@@ -14,12 +17,14 @@ $ErrorActionPreference = 'Stop'
 
 $GameDir    = 'C:\Program Files (x86)\Steam\steamapps\common\Holdfast Nations At War'
 $ManagedDir = Join-Path $GameDir 'Holdfast NaW_Data\Managed'
-$MelonDir   = Join-Path $GameDir 'MelonLoader\net35'
-$ModsDir    = Join-Path $GameDir 'Mods'
+$ProfileDir = Join-Path $env:APPDATA "r2modmanPlus-local\HoldfastNationsAtWar\profiles\$ProfileName"
+$BepInExDir = Join-Path $ProfileDir 'BepInEx\core'
+$PluginsDir = Join-Path $ProfileDir 'BepInEx\plugins\QuietAdmin'
 $OutFile    = Join-Path $PSScriptRoot 'QuietAdmin.dll'
 
-foreach ($d in @($ManagedDir, $MelonDir, $ModsDir)) {
-    if (-not (Test-Path $d)) { throw "Missing directory: $d" }
+if (-not (Test-Path $ManagedDir)) { throw "Missing directory: $ManagedDir" }
+if (-not (Test-Path $BepInExDir)) {
+    throw "No BepInEx in profile '$ProfileName'. Install BepInExPack through r2modman first. Looked in: $BepInExDir"
 }
 
 $csc = Get-ChildItem -Path 'C:\Program Files\dotnet\sdk' -Recurse -Filter 'csc.dll' -ErrorAction SilentlyContinue |
@@ -34,8 +39,9 @@ $refs = @(
     (Join-Path $ManagedDir 'UnityEngine.dll'),
     (Join-Path $ManagedDir 'UnityEngine.CoreModule.dll'),
     (Join-Path $ManagedDir 'Assembly-CSharp.dll'),
-    (Join-Path $MelonDir   'MelonLoader.dll'),
-    (Join-Path $MelonDir   '0Harmony.dll')
+    (Join-Path $ManagedDir 'HoldfastEnums.Runtime.dll'),
+    (Join-Path $BepInExDir 'BepInEx.dll'),
+    (Join-Path $BepInExDir '0Harmony.dll')
 )
 
 $cscArgs = @('-nologo', '-noconfig', '-nostdlib+', '-target:library', "-out:$OutFile")
@@ -58,9 +64,10 @@ if ($NoDeploy) {
 }
 
 try {
-    Copy-Item $OutFile (Join-Path $ModsDir 'QuietAdmin.dll') -Force
-    Write-Host "Copied to $ModsDir. Restart the game to load it."
+    if (-not (Test-Path $PluginsDir)) { New-Item -ItemType Directory -Path $PluginsDir -Force | Out-Null }
+    Copy-Item $OutFile (Join-Path $PluginsDir 'QuietAdmin.dll') -Force
+    Write-Host "Copied to $PluginsDir. Restart the game to load it."
 }
 catch [System.IO.IOException] {
-    throw "Built fine, but could not copy into $ModsDir - the game is probably running and has the DLL loaded. Close Holdfast and run this again."
+    throw "Built fine, but could not copy into $PluginsDir - the game is probably running and has the DLL loaded. Close Holdfast and run this again."
 }
