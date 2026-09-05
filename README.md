@@ -22,7 +22,7 @@ the game from the manager. BepInEx is pulled in as a dependency, so there is not
 run the game once so it creates its folders. Then put `ServerSilencer.dll` here:
 
 ```
-Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\ServerSilencer.dll
+Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\ServerSilencer\ServerSilencer.dll
 ```
 
 ### Did it work?
