@@ -40,6 +40,11 @@ If it is not there, the mod was not loaded. See [Troubleshooting](#troubleshooti
 `BepInEx\config\com.ryannlt.quietadmin.cfg`, written on first run. Edits apply within a second, no restart
 needed.
 
+For an in-game editor instead of a text file, [ConfigurationManager](https://github.com/BepInEx/BepInEx.ConfigurationManager)
+works, but only after setting `HideManagerGameObject = true` under `[Chainloader]` in
+`BepInEx\config\BepInEx.cfg`. Holdfast's BepInEx pack ships that as `false`, which stops
+ConfigurationManager drawing at all.
+
 | Setting | Default | Effect |
 | --- | --- | --- |
 | `BlockAdminChat` | `true` | Hide the server's admin-channel chat lines. |
@@ -89,7 +94,7 @@ powershell -ExecutionPolicy Bypass -File .\build.ps1
 
 That compiles the mod and copies the `.dll` into the r2modman profile's `BepInEx\plugins\QuietAdmin\`. Restart
 the game to load it. Add `-NoDeploy` to build without copying, which is useful while the game is running and
-holding the file. `-ProfileName` picks a profile other than `Default`.
+holding the file. `-ProfileName` picks a profile other than `Dev`.
 
 `package.ps1` builds the same way and stages an uploadable Thunderstore zip in `Package\`.
 
