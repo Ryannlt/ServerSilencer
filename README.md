@@ -30,7 +30,7 @@ Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\QuietAdmin.dll
 Open `BepInEx\LogOutput.log` and look for:
 
 ```
-[Info   :   BepInEx] Loading [QuietAdmin 2.0.0]
+[Info   :   BepInEx] Loading [QuietAdmin 1.0.0]
 ```
 
 If it is not there, the mod was not loaded. See [Troubleshooting](#troubleshooting).
@@ -63,12 +63,6 @@ ConfigurationManager drawing at all.
 When a server mod sends you a private message, Holdfast shows it **twice**, once as the message and once as an
 admin-channel echo. QuietAdmin removes the echo and keeps the message, so server mods that reply to your
 commands still work.
-
-## Moving from the MelonLoader version
-
-Version 1.0.0 was a MelonLoader mod and is no longer updated. Delete `Mods\QuietAdmin.dll` before installing
-this one. Running both loaders at once is not supported and your settings do not carry over, since they now live
-in the BepInEx config file above.
 
 ## Troubleshooting
 
@@ -111,14 +105,14 @@ needing a targeting pack installed.
 
 ### Why there is no CI build
 
-Building needs `Assembly-CSharp.dll` from a real install. Those are Anvil's files, not mine to redistribute, so
+Building needs `Assembly-CSharp.dll` from a real install. Those are AGS files, not mine to redistribute, so
 they cannot be committed here and a GitHub Actions runner has no way to get them. Releases are built locally and
 uploaded by hand.
 
 ## Compatibility
 
 Built against Holdfast on Unity 2022.3.62f2 with BepInEx 5.4.23.5 (Mono). It patches named methods rather than
-offsets, so it usually survives game updates. If Anvil renames or restructures the chat system it will stop
+offsets, so it usually survives game updates. If AGS renames or restructures the chat system it will stop
 working rather than misbehave. Open an issue if that happens.
 
 ## Licence
