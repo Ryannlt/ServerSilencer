@@ -1,7 +1,7 @@
-# QuietAdmin
+# ServerSilencer
 
-[![Latest release](https://img.shields.io/github/v/release/Ryannlt/QuietAdmin?label=latest&style=flat-square)](https://github.com/Ryannlt/QuietAdmin/releases/latest)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/Ryannlt/QuietAdmin/blob/main/LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/Ryannlt/ServerSilencer?label=latest&style=flat-square)](https://github.com/Ryannlt/ServerSilencer/releases/latest)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/Ryannlt/ServerSilencer/blob/main/LICENSE)
 
 A [BepInEx](https://github.com/BepInEx/BepInEx) mod for **Holdfast: Nations At War** that hides the chat lines
 the server posts on the admin channel. Slays, revives, teleports and weapon grants all produce one. A server mod
@@ -19,10 +19,10 @@ the game from the manager. BepInEx is pulled in as a dependency, so there is not
 
 **By hand.** Install
 [BepInExPack](https://thunderstore.io/c/holdfast-nations-at-war/p/BepInEx/BepInExPack/) into the game folder and
-run the game once so it creates its folders. Then put `QuietAdmin.dll` here:
+run the game once so it creates its folders. Then put `ServerSilencer.dll` here:
 
 ```
-Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\QuietAdmin.dll
+Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\ServerSilencer.dll
 ```
 
 ### Did it work?
@@ -30,14 +30,14 @@ Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\QuietAdmin.dll
 Open `BepInEx\LogOutput.log` and look for:
 
 ```
-[Info   :   BepInEx] Loading [QuietAdmin 1.0.0]
+[Info   :   BepInEx] Loading [ServerSilencer 1.0.0]
 ```
 
 If it is not there, the mod was not loaded. See [Troubleshooting](#troubleshooting).
 
 ## Settings
 
-`BepInEx\config\com.ryannlt.quietadmin.cfg`, written on first run. Edits apply within a second, no restart
+`BepInEx\config\com.ryannlt.serversilencer.cfg`, written on first run. Edits apply within a second, no restart
 needed.
 
 For an in-game editor instead of a text file, [ConfigurationManager](https://github.com/BepInEx/BepInEx.ConfigurationManager)
@@ -61,7 +61,7 @@ ConfigurationManager drawing at all.
 | Centre-screen popups | only with `BlockNotifications` |
 
 When a server mod sends you a private message, Holdfast shows it **twice**, once as the message and once as an
-admin-channel echo. QuietAdmin removes the echo and keeps the message, so server mods that reply to your
+admin-channel echo. ServerSilencer removes the echo and keeps the message, so server mods that reply to your
 commands still work.
 
 ## Troubleshooting
@@ -86,7 +86,7 @@ Only needed if you want to change something. Otherwise use the release above.
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-That compiles the mod and copies the `.dll` into the r2modman profile's `BepInEx\plugins\QuietAdmin\`. Restart
+That compiles the mod and copies the `.dll` into the r2modman profile's `BepInEx\plugins\ServerSilencer\`. Restart
 the game to load it. Add `-NoDeploy` to build without copying, which is useful while the game is running and
 holding the file. `-ProfileName` picks a profile other than `Dev`.
 
@@ -117,4 +117,4 @@ working rather than misbehave. Open an issue if that happens.
 
 ## Licence
 
-[MIT](https://github.com/Ryannlt/QuietAdmin/blob/main/LICENSE). Do what you like with it, no warranty.
+[MIT](https://github.com/Ryannlt/ServerSilencer/blob/main/LICENSE). Do what you like with it, no warranty.

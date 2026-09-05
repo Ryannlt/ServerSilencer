@@ -1,8 +1,8 @@
 {
-  "name": "QuietAdmin",
+  "name": "ServerSilencer",
   "version_number": "1.0.0",
-  "website_url": "https://github.com/Ryannlt/QuietAdmin",
-  "description": "Hides the admin-channel chat the server posts for slays, revives and teleports, so a busy server mod cannot bury your chat pane. Private messages and broadcasts still come through. Client side, and nobody else needs it.",
+  "website_url": "https://github.com/Ryannlt/ServerSilencer",
+  "description": "Hides admin channel messages originating from the server. Useful with mods where the server slays, revives, teleports or messages often.",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2305"
   ]

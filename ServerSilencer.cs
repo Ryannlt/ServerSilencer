@@ -11,15 +11,15 @@ using UnityEngine;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-namespace QuietAdmin
+namespace ServerSilencer
 {
     // Hides the chat lines the server posts on the admin channel - slays, revives, teleports, weapon grants -
     // which a server mod can generate hundreds of in one session.
-    [BepInPlugin(Guid, "QuietAdmin", "1.0.0")]
-    public class QuietAdminMod : BaseUnityPlugin
+    [BepInPlugin(Guid, "ServerSilencer", "1.0.0")]
+    public class ServerSilencerMod : BaseUnityPlugin
     {
-        // Also names the config file, BepInEx/config/com.ryannlt.quietadmin.cfg.
-        public const string Guid = "com.ryannlt.quietadmin";
+        // Also names the config file, BepInEx/config/com.ryannlt.serversilencer.cfg.
+        public const string Guid = "com.ryannlt.serversilencer";
 
         internal static ConfigEntry<bool> BlockAdminChat;
         internal static ConfigEntry<bool> BlockNotifications;
@@ -37,7 +37,7 @@ namespace QuietAdmin
             _stamp = Stamp();
 
             // BepInEx applies no Harmony patches itself, and without this the mod loads cleanly and does nothing.
-            Harmony.CreateAndPatchAll(typeof(QuietAdminMod).Assembly, Guid);
+            Harmony.CreateAndPatchAll(typeof(ServerSilencerMod).Assembly, Guid);
 
             Logger.LogInfo($"Ready. BlockAdminChat={BlockAdminChat.Value} BlockNotifications={BlockNotifications.Value}");
         }
@@ -82,7 +82,7 @@ namespace QuietAdmin
 
         private static bool ShouldHide(int playerID, TextChatEntryType entryType, TextChatChannel channel)
         {
-            if (!QuietAdminMod.BlockAdminChat.Value) return false;
+            if (!ServerSilencerMod.BlockAdminChat.Value) return false;
 
             // Private messages are always let through: the server mods answer commands on this channel.
             if (entryType == TextChatEntryType.PrivateMessage || entryType == TextChatEntryType.PrivateMessageAdmin)
@@ -101,7 +101,7 @@ namespace QuietAdmin
     {
         private static bool Prefix(FancyNotificationType notificationType)
         {
-            if (!QuietAdminMod.BlockNotifications.Value) return true;
+            if (!ServerSilencerMod.BlockNotifications.Value) return true;
 
             // AdminPM mirrors the private-message exemption above.
             return notificationType == FancyNotificationType.AdminPM;
