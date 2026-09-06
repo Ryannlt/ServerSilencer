@@ -18,8 +18,8 @@ and nobody else needs it installed.
 the game from the manager. BepInEx is pulled in as a dependency, so there is nothing else to set up.
 
 **By hand.** Install
-[BepInExPack](https://thunderstore.io/c/holdfast-nations-at-war/p/BepInEx/BepInExPack/) into the game folder and
-run the game once so it creates its folders. Then download `ServerSilencer.dll` from the
+[BepInExPack_Holdfast](https://thunderstore.io/c/holdfast-nations-at-war/p/HoldfastModding/BepInExPack_Holdfast/)
+into the game folder and run the game once so it creates its folders. Then download `ServerSilencer.dll` from the
 [latest release](https://github.com/Ryannlt/ServerSilencer/releases/latest) and put it here:
 
 ```
@@ -31,7 +31,7 @@ Steam\steamapps\common\Holdfast Nations At War\BepInEx\plugins\ServerSilencer\Se
 Open `BepInEx\LogOutput.log` and look for:
 
 ```
-[Info   :   BepInEx] Loading [ServerSilencer 1.0.0]
+[Info   :   BepInEx] Loading [ServerSilencer 1.0.1]
 ```
 
 If it is not there, the mod was not loaded. See [Troubleshooting](#troubleshooting).

@@ -8,14 +8,14 @@ using HoldfastGame;
 using UnityEngine;
 
 // Kept in step with BepInPlugin below; package.ps1 reads this back off the built DLL.
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 
 namespace ServerSilencer
 {
     // Hides the chat lines the server posts on the admin channel - slays, revives, teleports, weapon grants -
     // which a server mod can generate hundreds of in one session.
-    [BepInPlugin(Guid, "ServerSilencer", "1.0.0")]
+    [BepInPlugin(Guid, "ServerSilencer", "1.0.1")]
     public class ServerSilencerMod : BaseUnityPlugin
     {
         // Also names the config file, BepInEx/config/com.ryannlt.serversilencer.cfg.

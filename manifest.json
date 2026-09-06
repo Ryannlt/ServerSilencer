@@ -1,9 +1,9 @@
 {
   "name": "ServerSilencer",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Ryannlt/ServerSilencer",
   "description": "Hides admin channel messages originating from the server. Useful with mods where the server slays, revives, teleports or messages often.",
   "dependencies": [
-    "BepInEx-BepInExPack-5.4.2305"
+    "HoldfastModding-BepInExPack_Holdfast-5.4.2305"
   ]
 }
